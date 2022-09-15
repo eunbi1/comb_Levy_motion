@@ -19,11 +19,11 @@ class VPSDE:
     def beta(self, t):
         return (self.beta_1 - self.beta_0) * t + self.beta_0
 
-    def marginal_log_mean_coeff1(self, t):
+    def marginal_log_mean_coeff2(self, t):
         log_alpha_t = - 1 / (2 * 2) * (t ** 2) * (self.beta_1 - self.beta_0) - 1 / 2 * t * self.beta_0
         return log_alpha_t
 
-    def marginal_log_mean_coeff2(self, t):
+    def marginal_log_mean_coeff1(self, t):
         log_alpha_t = - 1 / (2 * self.alpha) * (t ** 2) * (self.beta_1 - self.beta_0) - 1 / self.alpha * t * self.beta_0
         return log_alpha_t
 
@@ -33,11 +33,11 @@ class VPSDE:
     def diffusion_coeff2(self, t):
         return torch.exp(self.marginal_log_mean_coeff2(t))
 
-    def marginal_std1(self, t):
+    def marginal_std2(self, t):
         sigma = torch.pow(1. - torch.exp(2 * self.marginal_log_mean_coeff1(t)), 1 / 2)
         return sigma
 
-    def marginal_std2(self, t):
+    def marginal_std1(self, t):
         sigma = torch.pow(1. - torch.exp(self.alpha * self.marginal_log_mean_coeff2(t)), 1 / self.alpha)
         return sigma
 

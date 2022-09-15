@@ -13,7 +13,7 @@ class VPSDE:
         self.beta_0 = beta_min
         self.beta_1 = beta_max
         self.alpha = alpha
-        self.t_0 = 0.3
+        self.t_0 = 0.5
         self.T = T
 
     def beta(self, t):
@@ -34,10 +34,10 @@ class VPSDE:
         return torch.exp(self.marginal_log_mean_coeff2(t))
 
     def marginal_std2(self, t):
-        sigma = torch.pow(1. - torch.exp(2 * self.marginal_log_mean_coeff1(t)), 1 / 2)
+        sigma = torch.pow(1. - torch.exp(2 * self.marginal_log_mean_coeff2(t)), 1 / 2)
         return sigma
 
     def marginal_std1(self, t):
-        sigma = torch.pow(1. - torch.exp(self.alpha * self.marginal_log_mean_coeff2(t)), 1 / self.alpha)
+        sigma = torch.pow(1. - torch.exp(self.alpha * self.marginal_log_mean_coeff1(t)), 1 / self.alpha)
         return sigma
 

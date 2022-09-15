@@ -27,9 +27,9 @@ def loss_fn(score_model, sde, x, t1, t2, e_L1, e_L11, e_L2,t_0, batch_size):
 
     x_coeff1 = sde.diffusion_coeff1(t1)
     x_coeff2 = sde.diffusion_coeff2(t2 -t_0)
-    
-    score1 = levy.score(e_L1, sde.alpha, type='cft').to(device) * torch.pow(sigma2 + 1e-4, -1)[:, None, None,None] * sde.beta(t2 - t_0)[:, None, None, None]
-    score2 = -1 / 2 * (e_L2)*torch.pow(sigma1+1e-4 , -1)[:,None,None,None]*sde.beta(t1)[:,None,None,None] # 32
+
+    score1 = levy.score(e_L1, sde.alpha, type='cft').to(device) * torch.pow(sigma1 + 1e-4, -1)[:, None, None,None] * sde.beta(t1)[:, None, None, None]
+    score2 = -1 / 2 * (e_L2)*torch.pow(sigma2+1e-4 , -1)[:,None,None,None]*sde.beta(t2-sde.t_0)[:,None,None,None] # 32
 
 
 
